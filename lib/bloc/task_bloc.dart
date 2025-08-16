@@ -55,6 +55,4 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       _taskBox.add(task.toMap());
     }
   }
-
-
 }

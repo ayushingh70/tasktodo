@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         toolbarHeight: 70,
 
+        // Profile Icon ( Not functional )
         leading: IconButton(
           icon: Icon(
             Icons.person,
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
 
+        // App Title
         title: Text(
           "Task Manager",
           style: TextStyle(
@@ -55,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
 
         actions: [
+          // Clear All Task Icon
           IconButton(
             icon: Icon(Icons.delete_sweep,
                 color: Theme.of(context).brightness == Brightness.dark
@@ -67,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
           ),
+          // Toggle Theme Icon
           IconButton(
             icon: Icon(
               Icons.brightness_6,
@@ -82,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      // ✅ Gradient Background
+      // Gradient Background
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -98,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
-                // ✅ Task Counter
+                // Shows number of tasks
                 BlocBuilder<TaskBloc, TaskState>(
                   builder: (context, state) {
                     return Text(
@@ -113,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 12),
 
-                // ✅ Filter Tabs (Theme Adaptive)
+                // Filter Tabs ( All, Pending, Completed )
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                   decoration: BoxDecoration(
@@ -163,11 +167,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 20),
 
-                // ✅ Task List
+                // Task List ( Filtered )
                 Expanded(
                   child: BlocBuilder<TaskBloc, TaskState>(
                     builder: (context, state) {
-                      // Apply filter
+                      // Apply filter to tasks
                       final tasks = state.tasks.where((task) {
                         if (filter == "Pending") return !task.isCompleted;
                         if (filter == "Completed") return task.isCompleted;
@@ -227,6 +231,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                               ),
+
+                              // Task Title
                               title: Text(
                                 task.title,
                                 style: TextStyle(
@@ -238,6 +244,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       : TextDecoration.none,
                                 ),
                               ),
+
+                              // Edit & Delete Icons on each tasks
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -275,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
 
-      // ✅ Floating Add Button
+      // Floating Button to add new task
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? Colors.blueAccent
@@ -347,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent, // for rounded+shadow container
+      backgroundColor: Colors.transparent,
       builder: (_) => Container(
         decoration: BoxDecoration(
           color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
@@ -488,7 +496,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     .add(AddTask(controller.text.trim()));
                 Navigator.pop(context);
                 _showSnack(
-                    context, "Task updated ✏️", isDark ? Colors.blueAccent : Colors.indigoAccent);
+                    context, "Task updated", isDark ? Colors.blueAccent : Colors.indigoAccent);
               }
             },
             child: const Text("Save"),

@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    // Navigate to Home after 2.5 seconds
+    // Navigate to Home after 3 seconds
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF6A11CB), Color(0xFF2575FC)], // Purple to Blue
+            colors: [Color(0xFF6A11CB), Color(0xFF2575FC)], // Purple to Blue Gradiant
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

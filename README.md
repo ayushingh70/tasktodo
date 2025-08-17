@@ -44,10 +44,3 @@ You can download the latest APK of this app here:
 1. Clone the repository:
 ```bash
 git clone https://github.com/ayushingh70/tasktodo.git
-
-
-
-
-
-
-

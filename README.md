@@ -11,10 +11,14 @@ Main code is in the `lib` folder. Open it to explore the logic, UI, and state ma
 
 ## 🖼️ Screenshots
 
-<p align="center" style="display: flex; gap: 18px; justify-content: center;">
-  <img src="https://github.com/user-attachments/assets/c92bb696-868a-4d8d-b01a-f5d94542ef55" alt="Light Theme" width="40%" />
-  <img src="https://github.com/user-attachments/assets/c31b080d-e969-4542-a3f0-8eccc3e6704e" alt="Dark Theme" width="40%" />
-</p>
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/c92bb696-868a-4d8d-b01a-f5d94542ef55" alt="Light Theme" width="250"/></td>
+    <td style="width:20px"></td>
+    <td><img src="https://github.com/user-attachments/assets/c31b080d-e969-4542-a3f0-8eccc3e6704e" alt="Dark Theme" width="250"/></td>
+  </tr>
+</table>
+
 
 
 ---
@@ -40,6 +44,7 @@ You can download the latest APK of this app here:
 1. Clone the repository:
 ```bash
 git clone https://github.com/ayushingh70/tasktodo.git
+
 
 
 

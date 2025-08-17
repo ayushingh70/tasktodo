@@ -32,8 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icon(
             Icons.person,
             color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.black,
+                ? Colors.white : Colors.black,
           ),
           tooltip: "Profile",
           onPressed: () {
@@ -51,8 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             fontSize: 22,
             letterSpacing: 1.2,
             color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.black,
+                ? Colors.white : Colors.black,
           ),
         ),
 
@@ -61,8 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.delete_sweep,
                 color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white
-                    : Colors.black),
+                    ? Colors.white : Colors.black),
             tooltip: "Clear All Tasks",
             onPressed: () {
               if (context.read<TaskBloc>().state.tasks.isNotEmpty) {
@@ -75,8 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(
               Icons.brightness_6,
               color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Colors.black,
+                  ? Colors.white : Colors.black,
             ),
             tooltip: "Toggle Theme",
             onPressed: () {
@@ -91,8 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: isDark
-                ? [const Color(0xFF0F0F0F), const Color(0xFF2C2C2C)]
-                : [const Color(0xFFFDFBFB), const Color(0xFFECE9E6)], // subtle warm white gradient
+                ? [const Color(0xFF0F0F0F), const Color(0xFF2C2C2C)] // Dark Mode base Color
+                : [const Color(0xFFFDFBFB), const Color(0xFFECE9E6)], // Light Mode base Color
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -143,8 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             color: isActive
                                 ? (Theme.of(context).brightness == Brightness.dark
-                                ? Colors.blueAccent.withOpacity(0.85) // active in dark
-                                : Colors.deepPurple.withOpacity(0.8)) // active in light
+                                ? Colors.blueAccent.withOpacity(0.85)
+                                : Colors.deepPurple.withOpacity(0.8))
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(30),
                           ),
@@ -155,8 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: isActive
                                   ? Colors.white
                                   : (Theme.of(context).brightness == Brightness.dark
-                                  ? Colors.white70
-                                  : Colors.black87), // adaptive text color
+                                  ? Colors.white70 : Colors.black87),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -180,12 +175,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       if (tasks.isEmpty) {
                         return Center(
-                          child: Text(
-                            "No tasks here 😴",
-                            style: TextStyle(
-                              color: isDark ? Colors.white70 : Colors.black54,
-                              fontSize: 18,
-                            ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center, // center vertically
+                            children: [
+                              Icon(
+                                Icons.note_add,
+                                size: 64,
+                                color: isDark ? Colors.white30 : Colors.black26,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                "No tasks here 😴\nAdd some tasks to get started!",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: isDark ? Colors.white70 : Colors.black54,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       }
@@ -198,8 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return Container(
                             decoration: BoxDecoration(
                               color: isDark
-                                  ? Colors.white.withOpacity(0.08)
-                                  : Colors.white,
+                                  ? Colors.white.withOpacity(0.08) : Colors.white,
                               borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
@@ -213,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 vertical: 8, horizontal: 6),
                             child: ListTile(
                               leading: Transform.scale(
-                                scale: 1.3, // ✅ Bigger Checkbox
+                                scale: 1.3, // Checkbox Size
                                 child: Checkbox(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(6),
@@ -252,8 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   IconButton(
                                     icon: Icon(Icons.edit,
                                         color: isDark
-                                            ? Colors.amberAccent
-                                            : Colors.blueAccent),
+                                            ? Colors.amberAccent : Colors.blueAccent),
                                     onPressed: () {
                                       _showEditDialog(
                                           context, index, task.title);
@@ -286,8 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // Floating Button to add new task
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? Colors.blueAccent
-            : Colors.indigoAccent,
+            ? Colors.blueAccent : Colors.indigoAccent,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
         label: const Text("Add Task"),

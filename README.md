@@ -1,12 +1,3 @@
-To check/review the main code please open 'lib' folder
-
-## 📱 Download
-You can download the latest APK of this app here:
-
-[![Download APK](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/ayushingh70/tasktodo/releases/tag/v1.0)
-
-
-
 # Task Manager App
 
 A simple **Task Manager Flutter app** to keep track of your tasks. Supports adding, completing, and deleting tasks, with a clean light and dark theme.
@@ -53,3 +44,4 @@ You can download the latest APK of this app here:
 1. Clone the repository:
 ```bash
 git clone https://github.com/ayushingh70/tasktodo.git
+

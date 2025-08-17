@@ -11,11 +11,10 @@ Main code is in the `lib` folder. Open it to explore the logic, UI, and state ma
 
 ## 🖼️ Screenshots
 
-### Light Theme
-![Light_mode1](https://github.com/user-attachments/assets/c92bb696-868a-4d8d-b01a-f5d94542ef55)
-
-### Dark Theme
-![Dark_mode1](https://github.com/user-attachments/assets/c31b080d-e969-4542-a3f0-8eccc3e6704e)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c92bb696-868a-4d8d-b01a-f5d94542ef55" alt="Light Theme" width="45%" />
+  <img src="https://github.com/user-attachments/assets/c31b080d-e969-4542-a3f0-8eccc3e6704e" alt="Dark Theme" width="45%" />
+</p>
 
 > Replace `images/light1.png`, etc. with the actual relative path to your images in the repo.
 
@@ -42,6 +41,7 @@ You can download the latest APK of this app here:
 1. Clone the repository:
 ```bash
 git clone https://github.com/ayushingh70/tasktodo.git
+
 
 
 

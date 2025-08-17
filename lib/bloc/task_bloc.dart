@@ -16,6 +16,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskState(storedTasks));
     });
 
+    // Add Task
     on<AddTask>((event, emit) {
       final updated = List<Task>.from(state.tasks)
         ..add(Task(title: event.title));
@@ -34,6 +35,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskState(updated));
     });
 
+    // Remove Task
     on<DeleteTask>((event, emit) {
       final updated = List<Task>.from(state.tasks)..removeAt(event.index);
       _saveToHive(updated);
@@ -45,6 +47,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(TaskState([]));
     });
 
+    // Update Task whether its Pending or Completed
     on<UpdateTask>((event, emit) {
       final updated = List<Task>.from(state.tasks);
       updated[event.index].title = event.newTitle;

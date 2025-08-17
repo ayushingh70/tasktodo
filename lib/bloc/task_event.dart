@@ -17,3 +17,10 @@ class DeleteTask extends TaskEvent {
   final int index;
   DeleteTask(this.index);
 }
+
+class UpdateTask extends TaskEvent {
+  final int index;
+  final String newTitle;
+
+  UpdateTask(this.index, this.newTitle);
+}

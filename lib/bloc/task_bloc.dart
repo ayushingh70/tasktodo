@@ -41,8 +41,15 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
 
     on<ClearAllTasks>((event, emit) {
-      _taskBox.clear(); // clears Hive storage
-      emit(TaskState([])); // updates UI
+      _taskBox.clear();
+      emit(TaskState([]));
+    });
+
+    on<UpdateTask>((event, emit) {
+      final updated = List<Task>.from(state.tasks);
+      updated[event.index].title = event.newTitle;
+      _saveToHive(updated);
+      emit(TaskState(updated));
     });
 
     // Load tasks immediately

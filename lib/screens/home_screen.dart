@@ -166,17 +166,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: BlocBuilder<TaskBloc, TaskState>(
                     builder: (context, state) {
-                      // Apply filter to tasks
-                      final tasks = state.tasks.where((task) {
+                      // Apply filter first
+                      var tasks = state.tasks.where((task) {
                         if (filter == "Pending") return !task.isCompleted;
                         if (filter == "Completed") return task.isCompleted;
                         return true;
                       }).toList();
 
+                      // ✅ Sort so that unchecked (pending) tasks appear first
+                      tasks.sort((a, b) {
+                        if (a.isCompleted == b.isCompleted) return 0; // no change
+                        return a.isCompleted ? 1 : -1; // completed → bottom
+                      });
+
                       if (tasks.isEmpty) {
                         return Center(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center, // center vertically
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
                                 Icons.note_add,
@@ -204,9 +210,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           final task = tasks[index];
 
                           return Container(
+                            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                             decoration: BoxDecoration(
-                              color: isDark
-                                  ? Colors.white.withOpacity(0.08) : Colors.white,
+                              color: isDark ? Colors.white.withOpacity(0.08) : Colors.white,
                               borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
@@ -216,11 +222,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ],
                             ),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 6),
                             child: ListTile(
                               leading: Transform.scale(
-                                scale: 1.3, // Checkbox Size
+                                scale: 1.3,
                                 child: Checkbox(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(6),
@@ -228,18 +232,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   activeColor: Colors.blueAccent,
                                   value: task.isCompleted,
                                   onChanged: (_) {
-                                    context.read<TaskBloc>().add(ToggleTask(index));
+                                    context.read<TaskBloc>().add(ToggleTask(
+                                        state.tasks.indexOf(task))); // still use original index
 
                                     if (!task.isCompleted) {
-                                      _showSnack(context, 'Task "${task.title}" Completed ✅', Colors.green);
+                                      _showSnack(context,
+                                          'Task "${task.title}" Completed ✅', Colors.green);
                                     } else {
-                                      _showSnack(context, 'Task "${task.title}" Marked Pending ⏳', Colors.orange);
+                                      _showSnack(context,
+                                          'Task "${task.title}" Marked Pending ⏳',
+                                          Colors.orange);
                                     }
                                   },
                                 ),
                               ),
-
-                              // Task Title
                               title: Text(
                                 task.title,
                                 style: TextStyle(
@@ -251,27 +257,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                       : TextDecoration.none,
                                 ),
                               ),
-
-                              // Edit & Delete Icons on each tasks
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  IconButton(
-                                    icon: Icon(Icons.edit,
-                                        color: isDark
-                                            ? Colors.amberAccent : Colors.blueAccent),
-                                    onPressed: () {
-                                      _showEditDialog(
-                                          context, index, task.title);
-                                    },
+                                  task.isCompleted
+                                      ? Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                    size: 26,
+                                  )
+                                      : IconButton(
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: isDark ? Colors.amberAccent : Colors.blueAccent,
+                                    ),
+                                      onPressed: () {
+                                        _showEditDialog(context, state.tasks.indexOf(task), task.title, task.isCompleted);
+                                      }
                                   ),
                                   IconButton(
-                                    icon: Icon(Icons.delete,
-                                        color: Colors.redAccent),
+                                    icon: const Icon(Icons.delete, color: Colors.redAccent),
                                     onPressed: () {
                                       context
                                           .read<TaskBloc>()
-                                          .add(DeleteTask(index));
+                                          .add(DeleteTask(state.tasks.indexOf(task)));
                                     },
                                   ),
                                 ],
@@ -446,7 +455,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Edit Task Dialog
-  void _showEditDialog(BuildContext context, int index, String currentTitle) {
+  void _showEditDialog(BuildContext context, int index, String currentTitle, bool isCompleted) {
+    // Don't allow editing completed tasks
+    if (isCompleted) return;
+
     final controller = TextEditingController(text: currentTitle);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -486,22 +498,24 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor:
-              isDark ? Colors.blueAccent : Colors.indigoAccent,
+              backgroundColor: isDark ? Colors.blueAccent : Colors.indigoAccent,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
             onPressed: () {
-              if (controller.text.trim().isNotEmpty) {
-                context.read<TaskBloc>().add(DeleteTask(index));
-                context
-                    .read<TaskBloc>()
-                    .add(AddTask(controller.text.trim()));
+              final newTitle = controller.text.trim();
+              if (newTitle.isNotEmpty) {
+                // ✅ Dispatch UpdateTask event
+                context.read<TaskBloc>().add(UpdateTask(index, newTitle));
+
                 Navigator.pop(context);
                 _showSnack(
-                    context, "Task updated", isDark ? Colors.blueAccent : Colors.indigoAccent);
+                  context,
+                  "Task updated ✏️",
+                  isDark ? Colors.blueAccent : Colors.indigoAccent,
+                );
               }
             },
             child: const Text("Save"),

@@ -1,4 +1,3 @@
-![Light_mode1](https://github.com/user-attachments/assets/c92bb696-868a-4d8d-b01a-f5d94542ef55)
 # Task Manager App
 
 A simple **Task Manager Flutter app** to keep track of your tasks. Supports adding, completing, and deleting tasks, with a clean light and dark theme.
@@ -43,5 +42,6 @@ You can download the latest APK of this app here:
 1. Clone the repository:
 ```bash
 git clone https://github.com/ayushingh70/tasktodo.git
+
 
 
